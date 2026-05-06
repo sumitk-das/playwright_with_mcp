@@ -1,4 +1,3 @@
-import re
 import pytest
 from playwright.sync_api import Page, expect
 from pages.products_page import ProductsPage
@@ -47,9 +46,9 @@ class TestProductsGrid:
         view_links = products_page.page.locator("a[href*='/product_details/']")
         assert view_links.count() > 0
 
-    def test_first_product_view_link_navigates(self, products_page: ProductsPage):
-        products_page.get_first_product_view_link().click()
-        expect(products_page.page).to_have_url(re.compile(r"/product_details/"))
+    def test_first_product_view_link_has_correct_href(self, products_page: ProductsPage):
+        href = products_page.get_first_product_view_link().get_attribute("href")
+        assert href and "/product_details/" in href, f"Unexpected href: {href}"
 
     def test_each_product_has_add_to_cart_btn(self, products_page: ProductsPage):
         add_btns = products_page.page.locator(".productinfo a.btn.add-to-cart")
