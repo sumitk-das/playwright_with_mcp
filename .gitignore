@@ -12,6 +12,7 @@ build/
 .pytest_cache/
 htmlcov/
 .coverage
+reports/
 
 # Playwright
 test-results/
